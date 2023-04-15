@@ -1,0 +1,54 @@
+def get_discount_list(page_no=1,page_size=100,discount_status='',acc=acc):    
+    choices='upcoming/ongoing/expired/all.'
+    acc=acc
+    path = "/api/v2/discount/get_discount_list"
+    timest = int(time.time())
+    tmp_base_string = "%s%s%s%s%s" % (partner_id, path, timest, acc, shop)
+    base_string = tmp_base_string.encode()
+    partner_key = tmp_partner_key.encode()
+    sign = hmac.new(partner_key, base_string, hashlib.sha256).hexdigest()
+    url = host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(acc,partner_id,shop,sign,timest)+"&page_no="+str(page_no)+"&page_size="+str(page_size)
+    if discount_status=='':
+        url+='&discount_status={}'.format('all')
+    else:
+        url+='&discount_status={}'.format(discount_status)
+    payload={}
+    headers = {
+
+    }
+    response = requests.request("GET",url,headers=headers, data=payload, allow_redirects=False)
+    return response.json()
+
+def get_discount(page_no=1,page_size=100,discount_id='',acc=acc):    
+    acc=acc
+    path = "/api/v2/discount/get_discount"
+    timest = int(time.time())
+    tmp_base_string = "%s%s%s%s%s" % (partner_id, path, timest, acc, shop)
+    base_string = tmp_base_string.encode()
+    partner_key = tmp_partner_key.encode()
+    sign = hmac.new(partner_key, base_string, hashlib.sha256).hexdigest()
+    url = host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(acc,partner_id,shop,sign,timest)+"&page_no="+str(page_no)+"&page_size="+str(page_size)+"&discount_id="+str(discount_id)
+
+    payload={}
+    headers = {
+
+    }
+    response = requests.request("GET",url,headers=headers, data=payload, allow_redirects=False)
+    return response.json()
+
+def update_discount(end_time=int(time.time())+3600,discount_id='',acc=acc,start_time=int(time.time())):    
+    acc=acc
+    path = "/api/v2/discount/update_discount"
+    timest = int(time.time())
+    tmp_base_string = "%s%s%s%s%s" % (partner_id, path, timest, acc, shop)
+    base_string = tmp_base_string.encode()
+    partner_key = tmp_partner_key.encode()
+    sign = hmac.new(partner_key, base_string, hashlib.sha256).hexdigest()
+    url = host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(acc,partner_id,shop,sign,timest)+"&start_time="+str(start_time)+"&end_time="+str(end_time)+"&discount_id="+str(discount_id)
+
+    payload={}
+    headers = {
+
+    }
+    response = requests.request("GET",url,headers=headers, data=payload, allow_redirects=False)
+    return response.json()
